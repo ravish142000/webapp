@@ -1,13 +1,12 @@
-name: Build and Test C# Project
+name: Build and Publish Web Application
 
 on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
-  build-and-test:
+  build-and-publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,11 +15,21 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1
+        dotnet-version: 5.0
 
     - name: Restore dependencies
       run: dotnet restore
 
     - name: Build
       run: dotnet build --configuration Release
+
+    - name: Publish
+      run: dotnet publish --configuration Release --output ./publish
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Web Application
+        path: ./publish
+
 
