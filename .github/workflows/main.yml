@@ -1,12 +1,13 @@
-name: Build and Publish Web Application
+name: Build and Test C# Project
 
 on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
-  build-and-publish:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,7 +16,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0
+        dotnet-version: 3.1
 
     - name: Restore dependencies
       run: dotnet restore
@@ -31,5 +32,7 @@ jobs:
       with:
         name: Web Application
         path: ./publish
+
+
 
 
